@@ -1,20 +1,26 @@
 #pragma once
 #include "MotherBoard.h"
+#include <Windows.h>
+
+#define CURSOR_CHAR '@'
+#define CONSOLE_TEXT_ATTRS FOREGROUND_GREEN | FOREGROUND_INTENSITY
 
 class AppleIMobo : public MotherBoard {
-    byte memory[65535];
+    HANDLE _stdOutHandle;
+
+    byte _memory[65535];
 
     //Apple I special memory blocks
     byte KBD; //WOZ monitor keyboard input
     byte KBDCR; //WOZ monitor keyboard status
     byte DSP; //WOZ monitor display output
     byte DSPCR; //WOZ monitor display status
-    byte statusBits; //status lights on the shift register
-    bool statusChanged; //do the bits need to be updated?
 
     int charsThisLine;
+    void printWithCursor(char chacter);
 public:
-    void initialize() override;
+    AppleIMobo();
+    ~AppleIMobo();
     void writeMemory(byte high, byte low, byte value) override;
     byte readMemory(byte high, byte low) override;
     void iterate() override;

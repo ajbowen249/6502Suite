@@ -14,8 +14,8 @@ const byte Core6502::IRQ_BRK_HI[2] = {
 const byte Core6502::IRQ_BRK_LO[2] = {
     0xFF, 0xFE };
 
-Core6502::Core6502(MotherBoard* mobo)
-    : _mobo(mobo) {
+Core6502::Core6502(MotherBoard* mobo) :
+    _mobo(mobo) {
 }
 
 void Core6502::iterate() {

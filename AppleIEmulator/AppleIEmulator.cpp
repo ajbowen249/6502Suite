@@ -10,8 +10,6 @@ int main() {
     AppleIMobo mobo;
     Core6502 cpu(&mobo);
 
-    mobo.initialize();
-    
     //set the reset vector to the top of the WOZ monitor program
     mobo.writeMemory(Core6502::RESET_HI[0], Core6502::RESET_HI[1], 0xFF);
     mobo.writeMemory(Core6502::RESET_LO[0], Core6502::RESET_LO[1], 0x00);
