@@ -2,36 +2,36 @@
 #include "MotherBoard.h"
 
 class Core6502 {
-	MotherBoard* _mobo;
+    MotherBoard* _mobo;
 
-	//6502 Registers
-	byte A; //Accumulator
-	byte X; //X index
-	byte Y; //Y index
-	byte StP; //Stack Pointer
-	byte PC[2]; //Program Counter
-	byte N; //N flag
-	byte Z; //Z flag
-	byte B; //B flag
-	byte C; //C flag
-	byte I; //I flag
-	byte D; //D flag
-	byte V; //V flag
+    //6502 Registers
+    byte A; //Accumulator
+    byte X; //X index
+    byte Y; //Y index
+    byte StP; //Stack Pointer
+    byte PC[2]; //Program Counter
+    byte N; //N flag
+    byte Z; //Z flag
+    byte B; //B flag
+    byte C; //C flag
+    byte I; //I flag
+    byte D; //D flag
+    byte V; //V flag
 
-	//containter for current instruction
-	//some instructions are 2 or 3 bytes
-	byte instruction[3];
+    //containter for current instruction
+    //some instructions are 2 or 3 bytes
+    byte instruction[3];
 
-	//container for the currently-pointed-to address
-	byte address[2];
+    //container for the currently-pointed-to address
+    byte address[2];
 
-	//should the menu be brought up
-	bool menuFlagged = false;
+    //should the menu be brought up
+    bool menuFlagged = false;
 
     byte fetchAndIncrement();
-	void decodeAndExecute();
-	void getAddress();
-	byte getOperand();
+    void decodeAndExecute();
+    void getAddress();
+    byte getOperand();
     bool detectRollover(byte byte1, byte byte2);
     void branch();
     void push(byte value);
@@ -105,6 +105,6 @@ public:
     static const byte IRQ_BRK_LO[2];
 
     Core6502(MotherBoard* mobo);
-	void iterate();
-	void reset();
+    void iterate();
+    void reset();
 };
