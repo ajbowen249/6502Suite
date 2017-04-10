@@ -15,23 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core6502.cpp">
+    <ClInclude Include="..\..\AppleIEmulator\inc\AppleIMobo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AppleIEmulator\src\AppleIEmulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common.cpp">
+    <ClCompile Include="..\..\AppleIEmulator\src\AppleIMobo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core6502.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MotherBoard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="programs\binaries\A1BASIC.BIN">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="programs\binaries\WOZMON.BIN">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.md" />
