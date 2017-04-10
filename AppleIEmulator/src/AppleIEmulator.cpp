@@ -12,10 +12,10 @@ int main() {
     //set the reset vector to the top of the WOZ monitor program
     mobo.writeMemory(Core6502::RESET_HI[0], Core6502::RESET_HI[1], 0xFF);
     mobo.writeMemory(Core6502::RESET_LO[0], Core6502::RESET_LO[1], 0x00);
-    
-    mobo.copyFileToRam("programs/binaries/CONSOLETEST.BIN", 0x00, 0x00);
-    mobo.copyFileToRam("programs/binaries/WOZMON.BIN", 0xFF, 0x00);
-    mobo.copyFileToRam("programs/binaries/A1BASIC.BIN", 0xE0, 0x00);
+
+    mobo.copyFileToRam("programs/binaries/ConsoleCharacterTest.bin", 0x00, 0x00);
+    mobo.copyFileToRam("programs/binaries/WozMonitor.bin", 0xFF, 0x00);
+    mobo.copyFileToRam("programs/binaries/Apple1Basic.bin", 0xE0, 0x00);
 
     cpu.reset();
 
