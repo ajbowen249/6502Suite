@@ -1,0 +1,2 @@
+# hmc-6502 Test Suite
+This is a basic test suite for the 6502 CPU that utilizes the [hmc-6502](https://github.com/cminter/hmc-6502) AllSuiteA tests. The ROM is loaded into memory at $4000 and the program is run until $45C0 (the final instruction, a looping jump to itself) is written.

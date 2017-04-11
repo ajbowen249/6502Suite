@@ -198,7 +198,7 @@ void Core6502::getAddress() {
         }
     } else if (instructionType == 0x02 || instructionType == 0x00) {
         instruction[1] = fetchAndIncrement();
-        byte opcode = (instruction[0] & 0x1C);
+        byte opcode = instruction[0];
         byte offset;
         if (opcode == 0x96 || opcode == 0xB6 || opcode == 0xBE) {
             offset = Y;

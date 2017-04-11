@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lib6502", "lib6502\lib6502.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppleIEmulator", "AppleIEmulator\AppleIEmulator.vcxproj", "{DA4F424E-4083-4C07-98E3-376EA147986F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-hmc-6502", "test-hmc-6502\test-hmc-6502.vcxproj", "{8876B10C-38FC-49C4-A5F9-9B93E142641F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{DA4F424E-4083-4C07-98E3-376EA147986F}.Release|x64.Build.0 = Release|x64
 		{DA4F424E-4083-4C07-98E3-376EA147986F}.Release|x86.ActiveCfg = Release|Win32
 		{DA4F424E-4083-4C07-98E3-376EA147986F}.Release|x86.Build.0 = Release|Win32
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Debug|x64.ActiveCfg = Debug|x64
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Debug|x64.Build.0 = Debug|x64
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Debug|x86.ActiveCfg = Debug|Win32
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Debug|x86.Build.0 = Debug|Win32
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Release|x64.ActiveCfg = Release|x64
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Release|x64.Build.0 = Release|x64
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Release|x86.ActiveCfg = Release|Win32
+		{8876B10C-38FC-49C4-A5F9-9B93E142641F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
