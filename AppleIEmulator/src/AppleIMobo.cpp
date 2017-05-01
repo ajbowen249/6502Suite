@@ -29,12 +29,16 @@ AppleIMobo::AppleIMobo() :
     GetConsoleCursorInfo(_stdOutHandle, &cursorInfo);
     cursorInfo.bVisible = FALSE;
     SetConsoleCursorInfo(_stdOutHandle, &cursorInfo);
+#else
+    cout << "\033[32;40m";
 #endif
 }
 
 AppleIMobo::~AppleIMobo() {
 #ifndef UNIX
     CloseHandle(_stdOutHandle);
+#else
+    cout << "\033[0m";
 #endif
 }
 
@@ -83,6 +87,9 @@ void AppleIMobo::iterate() {
             //WOZ bios uses ascii underscores for backspace and cannot display underscores
             if (character != '_') {
                 if (character == 0x08) character = '_';
+#ifdef UNIX
+                if (character == 0x0A) character = 0x0D;
+#endif
                 if (character >= 'a' && character <= 'z') character -= 32; //Apple I only supports uppercase characters
                 KBD = character | 0x80; //make sure the MSB is always high
                 KBDCR |= 0x80; //flag the new character
@@ -143,5 +150,7 @@ void AppleIMobo::printWithCursor(char character) {
         consoleInfo.dwCursorPosition.X--;
         SetConsoleCursorPosition(_stdOutHandle, consoleInfo.dwCursorPosition);
     }
+#else
+    cout << "\033[1D";
 #endif
 }

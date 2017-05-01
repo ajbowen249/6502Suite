@@ -3,4 +3,4 @@ CMakeCache.txt
 Makefile
 CmakeCache.txt
 cmake_install.cmake
-build
+out
