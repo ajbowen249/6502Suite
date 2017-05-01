@@ -1,18 +1,25 @@
 #include "AppleIMobo.h"
 #include <iostream>
-#include <conio.h>
 #include <fstream>
-#include <Windows.h>
+
+#ifndef UNIX
+    #include <conio.h>
+#else
+    #include <conio_unix.h>
+#endif
 
 using namespace std;
 
 AppleIMobo::AppleIMobo() :
+#ifndef UNIX
     _stdOutHandle(GetStdHandle(STD_OUTPUT_HANDLE)),
+#endif
     KBD(0),
     KBDCR(0),
     DSP(0),
     charsThisLine(0) {
 
+#ifndef UNIX
     //TODO: Find a way to resize the winow using api-level calls
     system("MODE CON COLS=40 LINES=25");
 
@@ -22,10 +29,13 @@ AppleIMobo::AppleIMobo() :
     GetConsoleCursorInfo(_stdOutHandle, &cursorInfo);
     cursorInfo.bVisible = FALSE;
     SetConsoleCursorInfo(_stdOutHandle, &cursorInfo);
+#endif
 }
 
 AppleIMobo::~AppleIMobo() {
+#ifndef UNIX
     CloseHandle(_stdOutHandle);
+#endif
 }
 
 void AppleIMobo::writeMemory(byte high, byte low, byte value) {
@@ -125,6 +135,7 @@ void AppleIMobo::printWithCursor(char character) {
     cout << character;
     cout << CURSOR_CHAR;
 
+#ifndef UNIX
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
     GetConsoleScreenBufferInfo(_stdOutHandle, &consoleInfo);
 
@@ -132,4 +143,5 @@ void AppleIMobo::printWithCursor(char character) {
         consoleInfo.dwCursorPosition.X--;
         SetConsoleCursorPosition(_stdOutHandle, consoleInfo.dwCursorPosition);
     }
+#endif
 }

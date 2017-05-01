@@ -1,12 +1,17 @@
 #pragma once
 #include "MotherBoard.h"
-#include <Windows.h>
+
+#ifndef UNIX
+    #include <Windows.h>
+#endif
 
 #define CURSOR_CHAR '@'
 #define CONSOLE_TEXT_ATTRS FOREGROUND_GREEN | FOREGROUND_INTENSITY
 
 class AppleIMobo : public MotherBoard {
+#ifndef UNIX
     HANDLE _stdOutHandle;
+#endif
 
     byte _memory[65535];
 
