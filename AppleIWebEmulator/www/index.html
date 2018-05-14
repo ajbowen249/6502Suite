@@ -5,7 +5,7 @@
             #screen {
                 background: black;
                 color: #00FF00;
-                font-family: 'Courier New', monospace;
+                font: 1.5em 'Andale Mono', Consolas, 'Courier New';
 
                 /* Fix the element height to 24 lines. */
                 line-height: 2.5ex;
@@ -23,6 +23,7 @@
             const maxLines = 24;
             let emulator;
             let iterateInterval;
+            let blinkInterval;
             let screen;
 
             const loadInterval = setInterval(() => {
@@ -43,6 +44,8 @@
                     }
                 }, 1);
 
+                blinkInterval = setInterval( () => blinkCursor(), 250);
+
                 document.getElementById('body').addEventListener('keypress', (event) => {
                     let key = event.key;
                     if (key === 'Enter') {
@@ -57,6 +60,7 @@
             //          character ROM and a blinking cursor. Also backspace.
             const lines = [ '&nbsp;' ];
             function print(char) {
+                stripCursor();
                 char = String.fromCharCode(char);
                 if (char === '\r' || char === '\n') {
                     lineBreak();
@@ -68,6 +72,10 @@
                     lines[lines.length - 1] += char;
                 }
 
+                dumpScreen();
+            }
+
+            function dumpScreen() {
                 screen.innerHTML = lines.join('<br />');
             }
 
@@ -76,6 +84,28 @@
                 if (lines.length > maxLines) {
                     lines.shift();
                 }
+            }
+
+            function endsWithCursor() {
+                const strCopy = lines[lines.length - 1];
+                return strCopy[strCopy.length - 1] === '@';
+            }
+
+            function stripCursor() {
+                if (endsWithCursor()) {
+                    lines[lines.length - 1] = lines[lines.length - 1].slice(0, -1);
+                    return true;
+                }
+
+                return false;
+            }
+
+            function blinkCursor() {
+                if (!stripCursor()) {
+                    lines[lines.length - 1] += '@';
+                }
+
+                dumpScreen();
             }
         </script>
     </head>
