@@ -2,7 +2,7 @@
     <head>
         <title>Apple I Emulator</title>
         <style>
-            #screen {
+            #screen_ {
                 background: black;
                 color: #00FF00;
                 font: 1.5em 'Andale Mono', Consolas, 'Courier New';
@@ -18,6 +18,7 @@
             }
         </style>
         <script type="text/javascript" src="lib.js"></script>
+        <script type="text/javascript" src="charGenerator.js"></script>
         <script type="text/javascript">
             const maxCols = 40;
             const maxLines = 24;
@@ -34,7 +35,7 @@
             }, 100);
 
             function init() {
-                screen = document.getElementById('screen');
+                screen = document.getElementById('screen').getContext('2d');
 
                 emulator = new Module.AppleIWebEmulator();
                 // TODO: Find a way to get this close to 1MHz without hanging the rest of the VM.
@@ -46,10 +47,14 @@
 
                 blinkInterval = setInterval( () => blinkCursor(), 250);
 
-                document.getElementById('body').addEventListener('keypress', (event) => {
+                const body = document.getElementById('body');
+                body.addEventListener('keydown', (event) => {
                     let key = event.key;
                     if (key === 'Enter') {
                         key = '\r';
+                    } else if (key === 'Backspace') {
+                        // The Apple 1 uses '_' for backspace. Don't ask;
+                        key = '_';
                     }
 
                     emulator.onKeyPressed(key);
@@ -58,12 +63,14 @@
 
             // IMPROVE: This should really be on a canvas with an accurate
             //          character ROM and a blinking cursor. Also backspace.
-            const lines = [ '&nbsp;' ];
+            const lines = [ '' ];
             function print(char) {
                 stripCursor();
                 char = String.fromCharCode(char);
                 if (char === '\r' || char === '\n') {
                     lineBreak();
+                } else if (char === '_') {
+                    stripLastChar();
                 } else {
                     if (lines[lines.length - 1].length >= maxCols) {
                         lineBreak();
@@ -76,11 +83,11 @@
             }
 
             function dumpScreen() {
-                screen.innerHTML = lines.join('<br />');
+                drawScreen(480, 432, 2, 2, lines, screen);
             }
 
             function lineBreak() {
-                lines.push('&nbsp;');
+                lines.push('');
                 if (lines.length > maxLines) {
                     lines.shift();
                 }
@@ -91,9 +98,13 @@
                 return strCopy[strCopy.length - 1] === '@';
             }
 
+            function stripLastChar() {
+                lines[lines.length - 1] = lines[lines.length - 1].slice(0, -1);
+            }
+
             function stripCursor() {
                 if (endsWithCursor()) {
-                    lines[lines.length - 1] = lines[lines.length - 1].slice(0, -1);
+                    stripLastChar();
                     return true;
                 }
 
@@ -110,6 +121,6 @@
         </script>
     </head>
     <body id="body">
-        <div id="screen" />
+        <canvas id="screen" width="480" height="432" />
     </body>
 </html>

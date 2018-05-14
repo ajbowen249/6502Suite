@@ -55,25 +55,15 @@ void WebMobo::iterate() {
     if (kbHit()) {
         if ((KBDCR & 0x80) == 0) {
             auto character = ch_;
-            //WOZ bios uses ascii underscores for backspace and cannot display underscores
-            if (character != '_') {
-                if (character == 0x08) character = '_';
-#ifdef UNIX
-                if (character == 0x0A) character = 0x0D;
-#endif
-                if (character >= 'a' && character <= 'z') character -= 32; //Apple I only supports uppercase characters
-                KBD = character | 0x80; //make sure the MSB is always high
-                KBDCR |= 0x80; //flag the new character
-            }
+            if (character >= 'a' && character <= 'z') character -= 32; //Apple I only supports uppercase characters
+            KBD = character | 0x80; //make sure the MSB is always high
+            KBDCR |= 0x80; //flag the new character
         }
     }
 
     if (DSP & 0x80) { //write character if needed
         char character = DSP & 0x7F;
-        if (character == 0x0D) {
-            print('\n');
-        } else if ((character > 0x1F || character == 0x08 || character == 0x0D) && character != 0x7F) {
-            if (character == '_') character = 0x08;
+        if ((character > 0x1F || character == 0x08 || character == 0x0D) && character != 0x7F) {
             print(character);
         }
 
