@@ -1,8 +1,8 @@
 #include "WebMobo.h"
-#include <iostream>
-#include <fstream>
 
-using namespace std;
+#include <emscripten.h>
+
+#include <fstream>
 
 WebMobo::WebMobo() :
     KBD(0),
@@ -82,7 +82,7 @@ void WebMobo::iterate() {
 }
 
 void WebMobo::copyFileToRam(const char* fileName, byte startHigh, byte startLow) {
-    ifstream file(fileName, ifstream::in | ifstream::binary | ifstream::ate);
+    std::ifstream file(fileName, std::ifstream::in | std::ifstream::binary | std::ifstream::ate);
     size_t memoryStart = makeAddress(startHigh, startLow);
 
     if (file.is_open()) {
@@ -92,17 +92,12 @@ void WebMobo::copyFileToRam(const char* fileName, byte startHigh, byte startLow)
     }
 }
 
+EM_JS(void, print_to_screen, (char character), {
+    print(character);
+});
+
 void WebMobo::print(char character) {
-    if (character == 0x08) {
-        cout << ' ';
-        cout << character;
-    }
-
-    if (character == '\n') {
-        cout << ' ';
-    }
-
-    cout << character;
+    print_to_screen(character);
 }
 
 void WebMobo::setChar(char input) {
@@ -115,5 +110,6 @@ bool WebMobo::kbHit() {
         kbHit_ = false;
         return true;
     }
+
     return false;
 }
