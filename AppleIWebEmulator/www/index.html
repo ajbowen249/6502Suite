@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Apple I Emulator</title>
+        <script type="text/javascript" src="lib.js"></script>
+        <script type="text/javascript">
+            let emulator;
+            let iterateInterval;
+
+            const loadInterval = setInterval(() => {
+                if (Module && Module.AppleIWebEmulator) {
+                    clearInterval(loadInterval);
+                    init();
+                }
+            }, 100);
+
+            function init() {
+                emulator = new Module.AppleIWebEmulator();
+                // TODO: Find a way to get this close to 1MHz without hanging the rest of the VM.
+                iterateInterval = setInterval(() => {
+                    for(let i = 0; i < 100; i++) {
+                        emulator.iterate();
+                    }
+                }, 1);
+                document.getElementById('body').addEventListener('keypress', (event) => {
+                    let key = event.key;
+                    if (key === 'Enter') {
+                        key = '\r';
+                    }
+
+                    emulator.onKeyPressed(key);
+                } );
+            }
+        </script>
+    </head>
+    <body id="body">
+        <div id="screen" />
+    </body>
+</html>
